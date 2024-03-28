@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        <h1 style="margin:10px;">Welcome {{user.username}}</h1>
+    {% else %}
+   
+        <form method="POST" action="{% url 'login' %}">
+            <div class="container" style="width: 50%;" >
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3">
+                    {{field.label_tag}}
+                    {{field}}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>        
+
+    {% endif %}
+{% endblock %}
